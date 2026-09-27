@@ -2,7 +2,6 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-let PORT = parseInt(process.env.PORT || '5173', 10);
 const MIME_TYPES = {
   '.html': 'text/html',
   '.css': 'text/css',
@@ -15,7 +14,8 @@ const MIME_TYPES = {
   '.mp3': 'audio/mpeg'
 };
 
-const server = http.createServer((req, res) => {
+// Request handler for both local server and Vercel serverless functions
+function requestHandler(req, res) {
   let reqPath = req.url.split('?')[0];
   if (reqPath === '/' || reqPath === '') reqPath = '/index.html';
 
@@ -23,8 +23,20 @@ const server = http.createServer((req, res) => {
 
   fs.readFile(filePath, (err, content) => {
     if (err) {
-      res.writeHead(404, { 'Content-Type': 'text/plain' });
-      res.end('File Not Found');
+      // Fallback to index.html for SPA-style routing
+      const indexPath = path.join(__dirname, 'index.html');
+      fs.readFile(indexPath, (indexErr, indexContent) => {
+        if (indexErr) {
+          res.writeHead(404, { 'Content-Type': 'text/plain' });
+          res.end('File Not Found');
+          return;
+        }
+        res.writeHead(200, {
+          'Content-Type': 'text/html',
+          'Access-Control-Allow-Origin': '*'
+        });
+        res.end(indexContent);
+      });
       return;
     }
 
@@ -36,24 +48,33 @@ const server = http.createServer((req, res) => {
     });
     res.end(content);
   });
-});
-
-function startServer(portToTry) {
-  server.listen(portToTry, () => {
-    console.log(`\n===========================================`);
-    console.log(`🎉 Flash Prank Web Server is LIVE!`);
-    console.log(`👉 Open: http://localhost:${portToTry}`);
-    console.log(`===========================================\n`);
-  });
-
-  server.on('error', (err) => {
-    if (err.code === 'EADDRINUSE') {
-      console.log(`⚠️ Port ${portToTry} is in use, trying port ${portToTry + 1}...`);
-      startServer(portToTry + 1);
-    } else {
-      console.error('Server error:', err);
-    }
-  });
 }
 
-startServer(PORT);
+// Only listen on port if executed directly (e.g., node server.js locally)
+if (require.main === module) {
+  let PORT = parseInt(process.env.PORT || '5173', 10);
+  const server = http.createServer(requestHandler);
+
+  function startServer(portToTry) {
+    server.listen(portToTry, () => {
+      console.log(`\n===========================================`);
+      console.log(`🎉 Flash Prank Web Server is LIVE!`);
+      console.log(`👉 Open: http://localhost:${portToTry}`);
+      console.log(`===========================================\n`);
+    });
+
+    server.on('error', (err) => {
+      if (err.code === 'EADDRINUSE') {
+        console.log(`⚠️ Port ${portToTry} is in use, trying port ${portToTry + 1}...`);
+        startServer(portToTry + 1);
+      } else {
+        console.error('Server error:', err);
+      }
+    });
+  }
+
+  startServer(PORT);
+}
+
+// Export handler so Vercel can run it as a serverless function without crashing!
+module.exports = requestHandler;
