@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Flash ₹5000</title>
+  <meta name="description" content="Flash Control Utility - High-Power LED Flashlight Management Tool">
+  <meta name="theme-color" content="#090b10">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="desktop-mockup-mode">
+
+  <!-- Fullscreen simulated screen strobe overlay (used when hardware LED is unavailable) -->
+  <div id="strobe-overlay" class="strobe-overlay hidden"></div>
+
+  <!-- Confetti Canvas for Gotcha Celebration -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Mobile Device Shell Wrapper -->
+  <div class="device-wrapper">
+    <div class="mobile-frame">
+      
+      <!-- Top Device Notch / Dynamic Island -->
+      <div class="device-notch">
+        <div class="camera-lens"></div>
+        <div class="speaker-grill"></div>
+      </div>
+
+      <!-- Top Status Bar & Quick Actions -->
+      <header class="app-header">
+        <div class="header-left">
+          <span class="live-clock" id="live-clock">09:41</span>
+          <span class="header-system-tag" id="header-system-tag">SYSTEM v2.4</span>
+        </div>
+        <div class="header-right">
+          <div class="status-indicator-dot" id="hardware-torch-dot" title="Flash Status"></div>
+          <button id="btn-toggle-sound" class="icon-btn" title="Toggle Sound (Mute/Unmute)" aria-label="Toggle Sound">
+            <span id="sound-icon">🔊</span>
+          </button>
+          <button id="btn-toggle-frame" class="icon-btn desktop-only" title="Toggle Device Frame / Fullscreen" aria-label="Toggle Device Frame">
+            <span id="frame-icon">📱</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Screens Container -->
+      <main class="screens-container">
+
+        <!-- ============================================== -->
+        <!-- STEP 1: HOME SCREEN (FLASH CONTROL)            -->
+        <!-- Pure professional utility - ZERO prank hints   -->
+        <!-- ============================================== -->
+        <section id="screen-home" class="screen active">
+          <div class="screen-content home-content">
+            
+            <div class="utility-badge">
+              <span class="pulse-dot"></span> HARDWARE ILLUMINATION MODULE
+            </div>
+
+            <!-- Flashlight Icon & Aura -->
+            <div class="torch-hero-container">
+              <div class="torch-beam-glow" id="home-beam-glow"></div>
+              <div class="torch-icon-circle">
+                <span class="torch-emoji">🔦</span>
+              </div>
+            </div>
+
+            <div class="home-title-box">
+              <h1 class="main-title">FLASH CONTROL</h1>
+              <p class="main-subtitle">Device High-Output LED Matrix</p>
+            </div>
+
+            <!-- Diagnostic Specs Box -->
+            <div class="utility-status-card">
+              <div class="status-row">
+                <span class="status-label">LED Power Beam:</span>
+                <span class="status-value text-cyan">Ultra Max (100%)</span>
+              </div>
+              <div class="status-row">
+                <span class="status-label">Thermal Regulator:</span>
+                <span class="status-value text-green">Online</span>
+              </div>
+              <div class="status-row">
+                <span class="status-label">Hardware Controller:</span>
+                <span class="status-value text-green">Ready</span>
+              </div>
+            </div>
+
+            <!-- Large START Button -->
+            <button id="btn-start" class="btn btn-primary-start">
+              <span>START</span>
+              <svg class="btn-arrow" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+            </button>
+
+            <p class="home-instruction">Tap START to activate device flashlight</p>
+
+          </div>
+        </section>
+
+
+        <!-- ============================================== -->
+        <!-- STEP 2: FLASHLIGHT LOCKED SCREEN               -->
+        <!-- Serious, realistic security restriction        -->
+        <!-- ============================================== -->
+        <section id="screen-locked" class="screen screen-hazard">
+          
+          <div class="screen-content locked-content">
+            
+            <!-- Warning Header -->
+            <div class="warning-hero-badge">
+              <span class="warning-icon-pulsing">⚠️</span>
+            </div>
+
+            <h1 class="locked-title">⚠️ FLASHLIGHT LOCKED</h1>
+            
+            <div class="security-restriction-banner">
+              <span class="alert-pulse-circle"></span>
+              <strong>Security restriction activated.</strong>
+            </div>
+
+            <!-- Demand text -->
+            <p class="lock-demand-text">
+              To disable the flashlight, complete the required payment of ₹5,000.
+            </p>
+
+            <!-- Large Price Display -->
+            <div class="price-hero-card">
+              <div class="price-header-label">PAYMENT AMOUNT REQUIRED</div>
+              <div class="price-display-wrapper">
+                <span class="currency-symbol">₹</span>
+                <span class="amount-number">5,000</span>
+              </div>
+              <div class="price-meta-tag">System Security Unlock Protocol</div>
+            </div>
+
+            <!-- Security Diagnostic details -->
+            <div class="security-meta-box">
+              <div class="meta-item">
+                <span class="meta-label">LOCK PROTOCOL:</span>
+                <span class="meta-val">FL-SEC-5000-X</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">TORCH STATUS:</span>
+                <span class="meta-val text-red">LOCKED [ACTIVE]</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">DISCHARGE POWER:</span>
+                <span class="meta-val text-orange">CONTINUOUS HIGH</span>
+              </div>
+            </div>
+
+            <!-- Large CONTINUE Button -->
+            <button id="btn-continue" class="btn btn-warning-continue">
+              <span>CONTINUE</span>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+
+            <!-- Discreet Emergency Turn Flashlight OFF Control -->
+            <div class="emergency-control-container">
+              <button id="btn-emergency-off-1" class="discreet-emergency-link" title="Discreet Emergency Control">
+                Turn Flashlight OFF
+              </button>
+            </div>
+
+          </div>
+        </section>
+
+
+        <!-- ============================================== -->
+        <!-- STEP 3: FAKE PAYMENT SCREEN & PROCESSING       -->
+        <!-- Fictional payment gateway with simulated wait  -->
+        <!-- ============================================== -->
+        <section id="screen-payment" class="screen">
+          
+          <!-- View A: Payment Required Gateway Form -->
+          <div id="payment-view-entry" class="screen-content payment-content">
+            
+            <div class="billing-gateway-header">
+              <div class="gateway-brand">
+                <span class="shield-icon">🛡️</span>
+                <div class="gateway-brand-text">
+                  <span class="brand-title">DEVICE SERVICE BILLING</span>
+                  <span class="brand-sub">Security Clearance Gateway</span>
+                </div>
+              </div>
+              <span class="secure-tag">ENCRYPTED 256-BIT</span>
+            </div>
+
+            <h2 class="payment-title">PAYMENT REQUIRED</h2>
+
+            <div class="payment-amount-card">
+              <div class="payment-amount-label">Amount:</div>
+              <div class="payment-amount-val">₹5,000</div>
+              <div class="payment-amount-sub">Mandatory Device Unlock Surcharge</div>
+            </div>
+
+            <!-- Transaction Details Table -->
+            <div class="transaction-detail-box">
+              <div class="trans-row">
+                <span class="trans-label">Invoice Ref:</span>
+                <span class="trans-val" id="invoice-ref">INV-FL-2026-8891</span>
+              </div>
+              <div class="trans-row">
+                <span class="trans-label">Service:</span>
+                <span class="trans-val">Torch Restriction Release</span>
+              </div>
+              <div class="trans-row">
+                <span class="trans-label">Billing Method:</span>
+                <span class="trans-val">System Simulated Token</span>
+              </div>
+              <div class="trans-row">
+                <span class="trans-label">Gateway Status:</span>
+                <span class="trans-val text-orange">Pending User Authorization</span>
+              </div>
+            </div>
+
+            <div class="payment-warning-note">
+              <span>⚠️ Authorization is required to release the active hardware LED lock.</span>
+            </div>
+
+            <!-- Button: PROCEED TO PAYMENT -->
+            <button id="btn-proceed-payment" class="btn btn-payment-proceed">
+              <span>PROCEED TO PAYMENT</span>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+
+            <!-- Discreet Emergency Control -->
+            <div class="emergency-control-container">
+              <button id="btn-emergency-off-2" class="discreet-emergency-link" title="Discreet Emergency Control">
+                Turn Flashlight OFF
+              </button>
+            </div>
+
+          </div>
+
+          <!-- View B: Simulated Processing Screen (Wait: 3s + 2s) -->
+          <div id="payment-view-processing" class="screen-content processing-content hidden">
+            
+            <div class="processing-spinner-container">
+              <div class="outer-orbital-ring"></div>
+              <div class="inner-core-spinner"></div>
+              <div class="center-lock-icon">🔒</div>
+            </div>
+
+            <!-- Step 3.1: "Processing payment..." -->
+            <div id="processing-stage-1" class="processing-stage active">
+              <h2 class="processing-heading">Processing payment...</h2>
+              <p class="processing-subtext">Communicating with authorization terminal...</p>
+              
+              <div class="processing-progress-bar">
+                <div class="progress-fill-stage1"></div>
+              </div>
+            </div>
+
+            <!-- Step 3.2: "Payment verification in progress..." -->
+            <div id="processing-stage-2" class="processing-stage hidden">
+              <h2 class="processing-heading text-orange">Payment verification in progress...</h2>
+              <p class="processing-subtext">Validating ₹5,000 security release clearance...</p>
+              
+              <div class="processing-progress-bar">
+                <div class="progress-fill-stage2"></div>
+              </div>
+            </div>
+
+            <div class="simulation-secure-notice">
+              <span>🔒 DO NOT CLOSE WINDOW OR PRESS BACK</span>
+            </div>
+
+            <!-- Discreet Emergency Control -->
+            <div class="emergency-control-container mt-auto">
+              <button id="btn-emergency-off-3" class="discreet-emergency-link" title="Discreet Emergency Control">
+                Turn Flashlight OFF
+              </button>
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- ============================================== -->
+        <!-- STEP 4: FINAL REVEAL (GOTCHA!)                 -->
+        <!-- Dramatic transition, confetti, laugh & fanfare -->
+        <!-- Flashlight turns OFF immediately               -->
+        <!-- ============================================== -->
+        <section id="screen-reveal" class="screen screen-celebrate">
+          
+          <div class="screen-content reveal-content">
+            
+            <!-- Bouncing Emoji Trio -->
+            <div class="reveal-emojis-cluster">
+              <span class="party-emoji bounce-delay-1">😂</span>
+              <span class="party-emoji bounce-delay-2">🔦</span>
+              <span class="party-emoji bounce-delay-3">😂</span>
+            </div>
+
+            <h1 class="gotcha-title">😂 GOTCHA! 😂</h1>
+            <h2 class="gotcha-subtitle">YOU JUST GOT PRANKED!</h2>
+
+            <div class="reveal-card">
+              <p class="reveal-message">
+                You don't actually have to pay ₹5,000.
+              </p>
+              <p class="reveal-submessage">
+                It was only a flashlight prank! 🔦😂
+              </p>
+            </div>
+
+            <!-- Flashlight Turned OFF Confirmation Badge -->
+            <div class="flash-off-badge">
+              <span class="check-icon">✓</span>
+              <span>Flashlight has been safely turned <strong>OFF</strong>!</span>
+            </div>
+
+            <!-- Action Buttons: PLAY AGAIN & EXIT -->
+            <div class="reveal-actions-grid">
+              <button id="btn-play-again" class="btn btn-play-again">
+                <span class="btn-icon">🔄</span>
+                <span>PLAY AGAIN</span>
+              </button>
+
+              <button id="btn-exit" class="btn btn-exit">
+                <span class="btn-icon">🚪</span>
+                <span>EXIT</span>
+              </button>
+            </div>
+
+            <p class="prank-share-hint">
+              Now hand the phone to your friend and watch their reaction! 😈
+            </p>
+
+          </div>
+
+        </section>
+
+      </main>
+
+      <!-- Emergency Toast / Notification Banner -->
+      <div id="toast" class="toast hidden">
+        <span id="toast-icon">ℹ️</span>
+        <span id="toast-message">Notification</span>
+      </div>
+
+      <!-- Exit Dialog Modal -->
+      <div id="exit-modal" class="modal-backdrop hidden">
+        <div class="modal-card">
+          <div class="modal-emoji">👋</div>
+          <h3 class="modal-title">Thanks for Playing!</h3>
+          <p class="modal-text">All flashlight operations and sounds have been terminated safely.</p>
+          <div class="modal-actions">
+            <button id="btn-modal-restart" class="btn btn-secondary">Restart Prank</button>
+            <button id="btn-modal-close" class="btn btn-primary-start">Done</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="audio.js"></script>
+  <script src="torch.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
